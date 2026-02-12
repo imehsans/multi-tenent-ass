@@ -85,7 +85,7 @@ export function OrgSettingsForm({ org, canUpdate, canDelete }: OrgSettingsFormPr
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     disabled={!canUpdate || isUpdating}
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm disabled:bg-gray-100 disabled:text-gray-500"
+                    className="block w-full text-gray-800 px-4 py-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm disabled:bg-gray-100 disabled:text-gray-500"
                   />
                 </div>
               </div>
@@ -97,7 +97,7 @@ export function OrgSettingsForm({ org, canUpdate, canDelete }: OrgSettingsFormPr
                     type="text"
                     value={org.slug}
                     disabled
-                    className="block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm sm:text-sm text-gray-500 cursor-not-allowed"
+                    className="block w-full text-gray-800 px-4 py-2  rounded-md border-gray-300 bg-gray-50 shadow-sm sm:text-sm text-gray-500 cursor-not-allowed"
                   />
                 </div>
                 <p className="mt-2 text-xs text-gray-500">
