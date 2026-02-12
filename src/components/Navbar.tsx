@@ -1,21 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { OrgSwitcher } from './OrgSwitcher';
-import { createClient } from '@/lib/supabase/client';
-import { Button } from './ui/Button';
+import { ProfileDropdown } from './ProfileDropdown';
 
 export function Navbar() {
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push('/auth/login');
-    router.refresh();
-  };
-
   return (
     <nav className="sticky top-0 z-30 border-b border-gray-200 bg-white/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -34,13 +23,11 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={handleSignOut} className="text-gray-500 hover:text-gray-900">
-              Sign out
-            </Button>
+            <ProfileDropdown />
           </div>
         </div>
       </div>
     </nav>
   );
-
 }
+

@@ -45,25 +45,13 @@ export default async function OrgDashboardLayout({ children, params }: Dashboard
             ))}
           </nav>
 
-          <div className="mt-auto border-t border-slate-800 pt-4">
-            <div className="px-3 py-2">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Workspace
-              </p>
-              <div className="mt-2 flex items-center gap-2 text-sm text-slate-400">
-                {/* Placeholder for workspace stats or similar */}
-                <div className="h-2 w-2 rounded-full bg-green-500"></div>
-                <span>Operational</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
       {/* Main content */}
       <div className="flex w-full flex-1 flex-col md:pl-64">
-        <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8">{children}</main>
+        <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8 bg-[#f8fafb]">{children}</main>
       </div>
-    </div>
+    </div >
   );
 }

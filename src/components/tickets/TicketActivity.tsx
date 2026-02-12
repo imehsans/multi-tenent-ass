@@ -2,6 +2,7 @@
 
 import { Timeline } from './Timeline';
 import { CommentForm } from './CommentForm';
+import { TypingIndicator } from './TypingIndicator';
 import { useRealtimeTimeline } from '@/hooks/useRealtimeTimeline';
 
 interface TicketActivityProps {
@@ -17,6 +18,7 @@ export function TicketActivity({ ticketId, initialEvents }: TicketActivityProps)
       <div className="flex-1 px-6 py-6">
         <Timeline events={events} />
       </div>
+      <TypingIndicator ticketId={ticketId} />
       <div className="bg-gray-50 px-6 py-4 border-t border-gray-100">
         <CommentForm ticketId={ticketId} onOptimisticAdd={addOptimisticEvent} />
       </div>

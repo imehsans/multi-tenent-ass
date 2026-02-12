@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { addComment } from '@/lib/actions/timeline'; // Server Action
 import { useRouter } from 'next/navigation';
+import { useTypingIndicator } from '@/hooks/useTypingIndicator';
 
 interface CommentFormProps {
   ticketId: string;
@@ -14,6 +15,7 @@ export function CommentForm({ ticketId, onOptimisticAdd }: CommentFormProps) {
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const { indicateTyping } = useTypingIndicator(ticketId);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +62,10 @@ export function CommentForm({ ticketId, onOptimisticAdd }: CommentFormProps) {
           className="block w-full text-gray-800 rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           placeholder="Add a comment..."
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => {
+            setComment(e.target.value);
+            indicateTyping(e.target.value);
+          }}
         />
       </div>
       <div className="flex justify-end">
