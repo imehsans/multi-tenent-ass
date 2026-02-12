@@ -9,11 +9,11 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRealtimeTickets } from '@/hooks/useRealtimeTickets';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { listTickets } from '@/lib/actions/tickets';
 import { TicketCard } from './TicketCard';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { Pagination } from '@/components/Pagination';
 import Link from 'next/link';
 
 interface TicketListProps {
@@ -73,6 +73,14 @@ export function TicketList({
     }
   }, [orgId, nextCursor, isLoadingMore]);
 
+  // Use infinite scroll hook
+  const { observerTarget } = useInfiniteScroll({
+    onLoadMore: loadMore,
+    hasMore: hasNextPage,
+    isLoading: isLoadingMore,
+    threshold: 500,
+  });
+
   const displayedTickets = realtimeTickets.length > 0 ? realtimeTickets : tickets;
 
   if (!displayedTickets || displayedTickets.length === 0) {
@@ -102,18 +110,27 @@ export function TicketList({
   }
 
   return (
-    <div className="space-y-4">
-      {displayedTickets.map((ticket) => (
-        <TicketCard key={ticket.id} ticket={ticket} />
-      ))}
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {displayedTickets.map((ticket) => (
+          <div key={ticket.id} className="h-full">
+            <TicketCard ticket={ticket} />
+          </div>
+        ))}
+      </div>
 
-      <Pagination
-        onLoadMore={loadMore}
-        hasMore={hasNextPage}
-        isLoading={isLoadingMore}
-        currentCount={displayedTickets.length}
-        // Total count might be outdated if we don't refetch, but acceptable for "Load More"
-      />
+      {/* Infinite scroll observer target */}
+      <div ref={observerTarget} className="py-4 text-center">
+        {isLoadingMore && (
+          <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+            <LoadingSpinner size="sm" />
+            <span>Loading more tickets...</span>
+          </div>
+        )}
+        {!hasNextPage && displayedTickets.length > 0 && (
+          <p className="text-sm text-gray-400">All tickets loaded</p>
+        )}
+      </div>
     </div>
   );
 }

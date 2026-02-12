@@ -46,7 +46,10 @@ export async function getUserOrganizations() {
 
 export async function createOrganization(formData: FormData) {
   const user = await requireAuth();
-  const supabase = await createClient();
+
+  // Use service role client to bypass RLS for org creation
+  // This is safe because we verify auth above
+  const supabaseAdmin = createServiceRoleClient();
 
   const name = formData.get('name') as string;
   if (!name || name.length < 2) {
@@ -55,8 +58,8 @@ export async function createOrganization(formData: FormData) {
 
   const slug = slugify(name, { lower: true, strict: true });
 
-  // 1. Create Organization
-  const { data: org, error: orgError } = await supabase
+  // 1. Create Organization (using admin client to bypass RLS)
+  const { data: org, error: orgError } = await supabaseAdmin
     .from('organizations')
     .insert({ name, slug })
     .select()
@@ -66,7 +69,7 @@ export async function createOrganization(formData: FormData) {
 
   // 2. Add Creator as OWNER explicitly (Reliability fix)
   // We try to insert. If trigger already did it, we catch duplicate/conflict or ignore.
-  const { error: roleError } = await supabase
+  const { error: roleError } = await supabaseAdmin
     .from('user_roles')
     .insert({
       user_id: user.id,
@@ -158,4 +161,48 @@ export async function getOrganization(orgId: string) {
 
   if (error) throw error;
   return data;
+}
+
+export async function updateOrganization(orgId: string, updates: { name: string }) {
+  await requireAuth();
+  await requireRole(orgId, ['owner']); // Only owners can update
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('organizations')
+    .update({ name: updates.name })
+    .eq('id', orgId)
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  await createAuditLog({
+    org_id: orgId,
+    action: 'org.update',
+    entity_type: 'organization',
+    entity_id: orgId,
+    new_data: updates,
+  });
+
+  revalidatePath(`/orgs/${orgId}`);
+  return data;
+}
+
+export async function deleteOrganization(orgId: string) {
+  await requireAuth();
+  await requireRole(orgId, ['owner']); // Only owners can delete
+
+  // We need service role to delete everything due to potential RLS restrictions on cascade
+  const supabaseAdmin = createServiceRoleClient();
+
+  // 1. Log deletion before it happens (if possible, or just rely on logs disappearing? No, let's log to a global log if we had one.
+  // For now, we just delete.
+
+  const { error } = await supabaseAdmin.from('organizations').delete().eq('id', orgId);
+
+  if (error) throw error;
+
+  revalidatePath('/orgs');
 }

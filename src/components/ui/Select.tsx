@@ -4,7 +4,7 @@
  * Reusable select dropdown with label, error states, and accessibility.
  */
 
-import { SelectHTMLAttributes, forwardRef } from 'react';
+import { SelectHTMLAttributes, forwardRef, useId } from 'react';
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
    label?: string;
@@ -15,7 +15,9 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
    ({ label, error, options, placeholder, className = '', id, ...props }, ref) => {
-      const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+      // Use React's useId for stable ID generation across server/client
+      const autoId = useId();
+      const selectId = id || `select-${autoId}`;
 
       return (
          <div className="w-full">

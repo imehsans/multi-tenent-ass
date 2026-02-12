@@ -1,14 +1,14 @@
 /**
  * Organizations List Page
  *
- * Shows all organizations the user belongs to.
- * Allows creating new organizations.
+ * Shows all organizations the user belongs to with search and filter.
  */
 
 import { getUserOrganizations } from '@/lib/actions/organizations';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { OrganizationsClient } from '@/components/OrganizationsClient';
 
 export default async function OrganizationsPage() {
   const organizations = await getUserOrganizations();
@@ -36,25 +36,7 @@ export default async function OrganizationsPage() {
             actionHref="/orgs/new"
           />
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {organizations.map((org: any) => (
-              <Link
-                key={org.id}
-                href={`/orgs/${org.id}/tickets`}
-                className="block rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-lg"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-gray-900">{org.name}</h2>
-                  <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700 capitalize">
-                    {org.role}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600">
-                  Created {new Date(org.created_at).toLocaleDateString()}
-                </p>
-              </Link>
-            ))}
-          </div>
+            <OrganizationsClient organizations={organizations} />
         )}
       </div>
     </div>

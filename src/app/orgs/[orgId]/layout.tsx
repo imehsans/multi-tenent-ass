@@ -36,7 +36,7 @@ export default async function OrgDashboardLayout({ children, params }: Dashboard
   ];
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen  bg-gray-50">
       {/* Sidebar - Dark Modern Theme */}
       <div className="hidden border-r border-slate-800 bg-slate-900 md:fixed md:inset-y-0 md:top-16 md:flex md:w-64 md:flex-col">
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-4">

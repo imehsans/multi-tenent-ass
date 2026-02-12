@@ -50,19 +50,21 @@ export function Timeline({ events }: TimelineProps) {
                   />
                 ) : null}
                 <div className="relative flex space-x-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white">
-                    <span className="text-xs font-medium text-white">
-                      {/* Placeholder Avatar - Use actorId to seed distinct color if possible */}U
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500 ring-8 ring-white shadow-sm">
+                    <span className="text-xs font-bold text-white uppercase">
+                      {(event.actor_name || actorId || 'U').charAt(0)}
                     </span>
                   </div>
                   <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                     <div>
-                      <p className="text-sm text-gray-500">
-                        User{' '}
-                        <span className="font-medium text-gray-900">
-                          {actorId ? actorId.slice(0, 8) : 'Unknown'}
+                      <p className="text-sm text-gray-600">
+                        <span className="font-semibold text-gray-900">
+                          {event.actor_name || actorId?.slice(0, 8) || 'Unknown'}
                         </span>{' '}
                         {eventType === 'comment' ? 'commented' : `performed ${eventType}`}
+                        {event.actor_email && (
+                          <span className="text-gray-500 ml-1">({event.actor_email})</span>
+                        )}
                       </p>
                       <div className="mt-1 text-sm text-gray-700">
                         <p className="whitespace-pre-wrap">{content}</p>

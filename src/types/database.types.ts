@@ -61,6 +61,46 @@ export type Database = {
             }
             Relationships: []
          }
+         invites: {
+            Row: {
+               id: string
+               created_at: string
+               email: string
+               role: 'owner' | 'admin' | 'member' | 'viewer'
+               token: string
+               expires_at: string
+               accepted_at: string | null
+               org_id: string
+            }
+            Insert: {
+               id?: string
+               created_at?: string
+               email: string
+               role: 'owner' | 'admin' | 'member' | 'viewer'
+               token?: string
+               expires_at?: string
+               accepted_at?: string | null
+               org_id: string
+            }
+            Update: {
+               id?: string
+               created_at?: string
+               email?: string
+               role?: 'owner' | 'admin' | 'member' | 'viewer'
+               token?: string
+               expires_at?: string
+               accepted_at?: string | null
+               org_id?: string
+            }
+            Relationships: [
+               {
+                  foreignKeyName: "invites_org_id_fkey"
+                  columns: ["org_id"]
+                  referencedRelation: "organizations"
+                  referencedColumns: ["id"]
+               }
+            ]
+         }
          tickets: {
             Row: {
                id: string

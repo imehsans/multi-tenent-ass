@@ -1,12 +1,7 @@
-/**
- * Organization Settings Page
- *
- * Manage organization details.
- */
-
 import { getOrganization } from '@/lib/actions/organizations';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { OrgSettingsForm } from '@/components/OrgSettingsForm';
 
 interface PageProps {
   params: Promise<{ orgId: string }>;
@@ -15,6 +10,10 @@ interface PageProps {
 export default async function SettingsPage({ params }: PageProps) {
   const { orgId } = await params;
   const org = await getOrganization(orgId);
+   const { hasPermission } = await import('@/lib/permissions');
+
+   const canUpdate = await hasPermission(orgId, 'org.update');
+   const canDelete = await hasPermission(orgId, 'org.delete');
 
   return (
     <div className="px-4 py-6 sm:px-6 lg:px-8">
@@ -26,45 +25,7 @@ export default async function SettingsPage({ params }: PageProps) {
           </p>
         </div>
         <div className="mt-5 md:col-span-2 md:mt-0">
-          <form action="#" method="POST">
-            <div className="shadow sm:overflow-hidden sm:rounded-md">
-              <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Organization Name
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      defaultValue={org.name}
-                      disabled
-                      className="block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                    />
-                  </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Organization name cannot be changed (yet).
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Slug</label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      defaultValue={org.slug}
-                      disabled
-                      className="block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm sm:text-sm"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                <Button disabled>Save</Button>
-              </div>
-            </div>
-          </form>
+              <OrgSettingsForm org={org} canUpdate={canUpdate} canDelete={canDelete} />
         </div>
       </div>
     </div>

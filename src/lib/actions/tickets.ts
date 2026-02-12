@@ -100,12 +100,33 @@ export async function getTicket(ticketId: string) {
 
   const { data, error } = await supabase
     .from('tickets')
-    .select('*') // Simplify select for MVP, assuming simple tags or separate fetch
+    .select('*')
     .eq('id', ticketId)
     .single();
 
   if (error) throw error;
-  return data;
+
+  // Fetch creator details using Admin API
+  if (!data.created_by) {
+    return {
+      ...data,
+      creator_name: 'Unknown User',
+      creator_email: '',
+    };
+  }
+
+  const supabaseAdmin = await import('@/lib/supabase/server').then((mod) =>
+    mod.createServiceRoleClient()
+  );
+
+  const { data: userData } = await supabaseAdmin.auth.admin.getUserById(data.created_by);
+
+  // Enrich ticket with creator info
+  return {
+    ...data,
+    creator_name: userData.user?.user_metadata?.full_name || userData.user?.email?.split('@')[0] || 'Unknown User',
+    creator_email: userData.user?.email || '',
+  };
 }
 
 export async function updateTicket(ticketId: string, updates: UpdateTicketInput) {
@@ -238,7 +259,13 @@ export async function listTickets(params: {
   if (params.status) query = query.eq('status', params.status);
   if (params.severity) query = query.eq('severity', params.severity);
   if (params.assignee_id) query = query.eq('assignee_id', params.assignee_id);
-  if (params.search) query = query.textSearch('search_vector', params.search);
+
+  // Search in title and description using ILIKE (case-insensitive)
+  if (params.search) {
+    const searchTerm = `%${params.search}%`;
+    query = query.or(`title.ilike.${searchTerm},description.ilike.${searchTerm}`);
+  }
+
 
   // Implement cursor pagination
   if (params.cursor) {
@@ -247,22 +274,42 @@ export async function listTickets(params: {
     query = query.or(`created_at.lt.${created_at},and(created_at.eq.${created_at},id.lt.${id})`);
   }
 
-  const { data, error, count } = await query;
+  const { data, count, error } = await query;
   if (error) throw error;
 
   const hasNextPage = data.length > limit;
   const tickets = hasNextPage ? data.slice(0, -1) : data;
+  const nextCursor = hasNextPage
+    ? encodeCursor({ created_at: tickets[tickets.length - 1].created_at, id: tickets[tickets.length - 1].id })
+    : null;
 
-  let nextCursor = null;
-  if (hasNextPage) {
-    const lastTicket = tickets[tickets.length - 1];
-    nextCursor = encodeCursor({ created_at: lastTicket.created_at, id: lastTicket.id });
-  }
+  // Enrich with creator details
+  const supabaseAdmin = await import('@/lib/supabase/server').then((mod) =>
+    mod.createServiceRoleClient()
+  );
+
+  const enrichedTickets = await Promise.all(
+    tickets.map(async (ticket) => {
+      // Optimisation: Could batch these or cache, but for MVP straight fetch is acceptable for limit=10
+      // In production, use a proper profile table join
+      let creatorName = 'Unknown';
+      if (ticket.created_by) {
+        const { data: userData } = await supabaseAdmin.auth.admin.getUserById(ticket.created_by);
+        creatorName = userData.user?.user_metadata?.full_name ||
+          userData.user?.email?.split('@')[0] ||
+          'Unknown';
+      }
+      return {
+        ...ticket,
+        creator_name: creatorName,
+      };
+    })
+  );
 
   return {
-    tickets,
+    tickets: enrichedTickets,
     nextCursor,
     hasNextPage,
-    totalCount: count || 0,
+    totalCount: count,
   };
 }

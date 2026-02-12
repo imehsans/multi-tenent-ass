@@ -97,8 +97,6 @@ export async function getTimeline(ticketId: string) {
   const user = await requireAuth();
   const supabase = await createClient();
 
-  // Fetch timeline with actor details (if user_profiles exists, usually join here)
-  // For now using user_id via actor_id, client may enrich this if needed
   const { data, error } = await supabase
     .from('ticket_timeline_events')
     .select('*')
@@ -106,5 +104,23 @@ export async function getTimeline(ticketId: string) {
     .order('created_at', { ascending: true });
 
   if (error) throw error;
-  return data;
+
+  // Enrich with actor details
+  const supabaseAdmin = await import('@/lib/supabase/server').then((mod) =>
+    mod.createServiceRoleClient()
+  );
+
+  const enrichedEvents = await Promise.all(
+    (data || []).map(async (event) => {
+      const { data: userData } = await supabaseAdmin.auth.admin.getUserById(event.actor_id);
+
+      return {
+        ...event,
+        actor_name: userData.user?.user_metadata?.full_name || userData.user?.email?.split('@')[0] || 'Unknown User',
+        actor_email: userData.user?.email || '',
+      };
+    })
+  );
+
+  return enrichedEvents;
 }

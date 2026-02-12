@@ -28,12 +28,22 @@ export default function NewOrganizationPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Prevent double submission
+    if (isLoading) return;
+
+    // Validate name is not empty
+    if (!name || name.trim().length < 2) {
+      setError('Organization name must be at least 2 characters');
+      return;
+    }
+
     setError('');
     setIsLoading(true);
 
     try {
       const formData = new FormData();
-      formData.append('name', name);
+      formData.append('name', name.trim());
 
       const org = await createOrganization(formData);
 
@@ -42,8 +52,7 @@ export default function NewOrganizationPage() {
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create organization');
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Only reset on error
     }
   };
 
