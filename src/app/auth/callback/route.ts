@@ -1,0 +1,23 @@
+/**
+ * Auth Callback Route
+ *
+ * Handles OAuth callbacks and email confirmations.
+ * Required for Supabase Auth flow.
+ */
+
+import { createClient } from '@/lib/supabase/server';
+import { NextResponse } from 'next/server';
+
+export async function GET(request: Request) {
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get('code');
+  const next = requestUrl.searchParams.get('next') || '/orgs';
+
+  if (code) {
+    const supabase = await createClient();
+    await supabase.auth.exchangeCodeForSession(code);
+  }
+
+  // Redirect to the next URL or organizations page
+  return NextResponse.redirect(new URL(next, request.url));
+}
