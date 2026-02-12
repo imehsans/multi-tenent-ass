@@ -12,6 +12,7 @@ import type { Database } from '@/types/database.types';
 export type Role = 'owner' | 'admin' | 'member' | 'viewer';
 
 export type Permission =
+  | 'org.create'
   | 'org.delete'
   | 'org.update'
   | 'member.invite'
@@ -19,8 +20,11 @@ export type Permission =
   | 'member.update_role'
   | 'ticket.create'
   | 'ticket.update'
+  | 'ticket.status_change'
   | 'ticket.delete'
   | 'comment.create'
+  | 'comment.update'
+  | 'comment.delete'
   | 'attachment.upload'
   | 'attachment.delete';
 
