@@ -1,12 +1,3 @@
-/**
- * Organization Dashboard Layout
- *
- * Includes sidebar navigation for managing tickets, members, and settings.
- * Only applies to routes under /orgs/[orgId].
- */
-
-import Link from 'next/link';
-import { Button } from '@/components/ui/Button'; // Can be used for nav items styling if needed
 import { ReactNode } from 'react';
 import {
   HomeIcon,
@@ -14,9 +5,6 @@ import {
   CogIcon,
   ClipboardDocumentListIcon,
 } from '@heroicons/react/24/outline'; // Using outline for nav
-
-// Helper to check active state (client side) - wait, this is server component.
-// We can use a client component for navigation links to highlight active state.
 
 import { NavLink } from '@/components/NavLink'; // I'll need to create this simple component
 

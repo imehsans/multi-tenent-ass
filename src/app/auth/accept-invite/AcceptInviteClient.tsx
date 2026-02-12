@@ -1,9 +1,3 @@
-/**
- * Accept Invite Client Component
- *
- * Handles the invite acceptance flow with proper state management.
- */
-
 'use client';
 
 import { useEffect, useState } from 'react';

@@ -1,18 +1,3 @@
-/**
- * Rate Limiting
- *
- * Implements rate limiting to prevent abuse of Server Actions.
- *
- * Strategy:
- * 1. If Upstash Redis credentials are provided, use distributed rate limiting (Recommended for production).
- * 2. If not, fallback to simple in-memory rate limiting (Works for single-instance deployments).
- *
- * Limits:
- * - Ticket creation: 10/minute
- * - Comments: 30/minute
- * - File uploads: 5/minute
- */
-
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
 
@@ -92,10 +77,6 @@ export async function checkRateLimit(identifier: string, limiterType: keyof type
   return { success: true };
 }
 
-/**
- * Simple in-memory rate limiter (fallback)
- * Stores counts in a global Map. Note: Resets on server restart.
- */
 const inMemoryLimits = new Map<string, { count: number; resetAt: number }>();
 
 export function simpleRateLimit(

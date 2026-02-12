@@ -1,10 +1,3 @@
-/**
- * Ticket Form Component
- *
- * Create or Edit tickets.
- * Integrates with Server Actions, validation, and loading states.
- */
-
 'use client';
 
 import { useState, FormEvent } from 'react';

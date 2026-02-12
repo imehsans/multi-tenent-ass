@@ -1,10 +1,3 @@
-/**
- * Global Error Boundary with improved UI
- * - Handles uncaught exceptions
- * - Provides retry functionality
- * - Logs errors (in a real app, this would go to Sentry)
- */
-
 'use client';
 
 import { useEffect } from 'react';

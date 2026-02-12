@@ -1,12 +1,3 @@
-/**
- * Organization Switcher Component
- *
- * Dropdown to switch between organizations.
- * CRITICAL: Uses full page refresh for safe org switching.
- *
- * Security: Must clear all state when switching orgs to prevent data leaks.
- */
-
 'use client';
 
 import { Fragment } from 'react';
@@ -21,9 +12,6 @@ export function OrgSwitcher() {
 
   const handleOrgSwitch = (org: any) => {
     setCurrentOrg(org);
-
-    // CRITICAL: Full page refresh to clear all state
-    // This prevents cross-org data leaks
     window.location.href = `/orgs/${org.id}/tickets`;
   };
 

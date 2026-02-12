@@ -1,9 +1,3 @@
-/**
- * Ticket Activity Feed Component
- *
- * Combines Timeline list and Comment Form to manage optimistic UI state.
- */
-
 'use client';
 
 import { Timeline } from './Timeline';

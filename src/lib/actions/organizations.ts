@@ -1,9 +1,3 @@
-/**
- * Organization Server Actions
- *
- * Manages operations related to organizations and their memberships.
- */
-
 'use server';
 
 import { createClient, createServiceRoleClient } from '@/lib/supabase/server';
@@ -80,11 +74,8 @@ export async function createOrganization(formData: FormData) {
     .single();
 
   if (roleError) {
-    // If it's a duplicate key violation, it means the trigger worked.
-    // We can ignore it. Otherwise, we should log it.
     if (!roleError.message.includes('unique constraint') && !roleError.message.includes('duplicate key')) {
       console.error('Failed to assign owner role:', roleError);
-      // We might want to throw here, but let's see. If role assignment fails, user can't access org.
       throw new Error('Failed to assign owner role to organization creator.');
     }
   }
@@ -106,7 +97,6 @@ export async function createOrganization(formData: FormData) {
 
 export async function getOrganizationMembers(orgId: string) {
   const user = await requireAuth();
-  // Ensure user is a member of the organization (any role)
   await requireRole(orgId, ['owner', 'admin', 'member', 'viewer']);
 
   const supabase = await createClient();
@@ -119,8 +109,6 @@ export async function getOrganizationMembers(orgId: string) {
 
   if (error) throw error;
 
-  // Enhance with user details using Admin API
-  // Note: specific to assignment/demo where profiles table isn't enforced
   const supabaseAdmin = createServiceRoleClient();
 
   const membersWithDetails = await Promise.all(
@@ -194,11 +182,7 @@ export async function deleteOrganization(orgId: string) {
   await requireAuth();
   await requireRole(orgId, ['owner']); // Only owners can delete
 
-  // We need service role to delete everything due to potential RLS restrictions on cascade
   const supabaseAdmin = createServiceRoleClient();
-
-  // 1. Log deletion before it happens (if possible, or just rely on logs disappearing? No, let's log to a global log if we had one.
-  // For now, we just delete.
 
   const { error } = await supabaseAdmin.from('organizations').delete().eq('id', orgId);
 

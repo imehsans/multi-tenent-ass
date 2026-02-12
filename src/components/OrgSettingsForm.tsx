@@ -1,9 +1,3 @@
-/**
- * Organization Settings Form
- *
- * Allows owners to update organization details or delete the organization.
- */
-
 'use client';
 
 import { useState } from 'react';

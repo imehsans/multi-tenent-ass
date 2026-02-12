@@ -1,10 +1,3 @@
-/**
- * Ticket List Page
- *
- * Server Component that fetches tickets and renders the list view.
- * Handles server-side filtering and pagination.
- */
-
 import { listTickets } from '@/lib/actions/tickets';
 import { TicketList } from '@/components/tickets/TicketList';
 import { TicketFilters } from '@/components/tickets/TicketFilters';

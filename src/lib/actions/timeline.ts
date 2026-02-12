@@ -1,9 +1,3 @@
-/**
- * Timeline Server Actions
- *
- * Manages timeline events for tickets, status changes, and comments.
- */
-
 'use server';
 
 import { createClient } from '@/lib/supabase/server';

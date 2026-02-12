@@ -1,10 +1,3 @@
-/**
- * Ticket Header Component
- *
- * Header for the ticket detail page.
- * Could include back button, breadcrumbs, or action buttons (Edit, Delete).
- */
-
 'use client';
 
 import { useState } from 'react';

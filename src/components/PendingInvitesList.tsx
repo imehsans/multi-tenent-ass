@@ -1,9 +1,3 @@
-/**
- * Pending Invites List Component
- *
- * Displays pending invitations with copy link and cancel actions.
- */
-
 'use client';
 
 import { useState } from 'react';

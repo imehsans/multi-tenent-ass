@@ -1,9 +1,3 @@
-/**
- * Ticket Description Component
- *
- * Displays ticket description with inline editing capabilities.
- */
-
 'use client';
 
 import { useState } from 'react';

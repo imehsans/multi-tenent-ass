@@ -1,9 +1,3 @@
-/**
- * Accept Invite Page
- *
- * Allows users to accept organization invitations via token link.
- */
-
 import { Suspense } from 'react';
 import AcceptInviteClient from './AcceptInviteClient';
 

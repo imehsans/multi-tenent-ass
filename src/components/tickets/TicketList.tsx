@@ -1,10 +1,3 @@
-/**
- * Ticket List Component
- *
- * Lists tickets with realtime updates for the current organization.
- * Integrates cursor pagination and filtering.
- */
-
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';

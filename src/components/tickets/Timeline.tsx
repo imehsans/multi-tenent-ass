@@ -1,9 +1,3 @@
-/**
- * Timeline Component
- *
- * Displays list of events (comments, status changes) for a ticket.
- */
-
 'use client';
 
 import { formatDistanceToNow } from 'date-fns';
@@ -34,8 +28,6 @@ export function Timeline({ events }: TimelineProps) {
     <div className="flow-root">
       <ul className="-mb-8">
         {events.map((event, eventIdx) => {
-          // Normalize event data (Supabase realtime payload vs initial fetch might differ slightly if not careful, but usually consistent)
-          // Actually, database types say 'event_type', but initial code used 'type'. Let's handle both.
           const eventType = event.event_type || event.type;
           const content = event.content;
           const actorId = event.actor_id || event.user_id;

@@ -1,10 +1,3 @@
-/**
- * Auth Callback Route
- *
- * Handles OAuth callbacks and email confirmations.
- * Required for Supabase Auth flow.
- */
-
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 

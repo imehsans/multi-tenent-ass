@@ -1,12 +1,3 @@
-/**
- * Authentication Middleware
- *
- * Implements authentication and route protection using @supabase/ssr.
- * - Handles session refresh via cookies
- * - Protects /orgs routes (redirects to /auth/login)
- * - Redirects authenticated users from /auth pages to /orgs
- */
-
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
@@ -53,8 +44,6 @@ export async function middleware(request: NextRequest) {
     const redirectUrl = new URL('/orgs', request.url);
     const redirectResponse = NextResponse.redirect(redirectUrl);
 
-    // Copy cookies from the refreshed response to the redirect response
-    // ensuring the new session (if refreshed) is persisted
     const cookiesToSet = response.cookies.getAll();
     cookiesToSet.forEach((cookie) => {
       redirectResponse.cookies.set(cookie.name, cookie.value, cookie);
@@ -68,13 +57,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files (images, etc.)
-     */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };

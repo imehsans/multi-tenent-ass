@@ -1,9 +1,3 @@
-/**
- * Navbar Component
- *
- * Top navigation bar with org switcher and user menu.
- */
-
 'use client';
 
 import Link from 'next/link';

@@ -1,21 +1,3 @@
-/**
- * Health Check API Route
- *
- * - Check database connectivity
- * - Return status: healthy/unhealthy
- * - Optional: Check Supabase Storage, Redis
- *
- * Endpoint: GET /api/health
- * Response: { status: 'healthy', timestamp: '...' }
- *
- * Use for:
- * - Monitoring/alerting
- * - Load balancer health checks
- * - Deployment verification
- *
- * See: docs/backend.md - Step 12: Health Check API
- */
-
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 

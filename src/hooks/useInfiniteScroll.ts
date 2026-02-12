@@ -1,9 +1,3 @@
-/**
- * Infinite Scroll Hook
- * 
- * Automatically loads more items when user scrolls near the bottom of the page.
- */
-
 'use client';
 
 import { useEffect, useRef, useCallback } from 'react';

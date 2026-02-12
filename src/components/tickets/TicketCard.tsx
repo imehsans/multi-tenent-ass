@@ -1,10 +1,3 @@
-/**
- * Ticket Card Component
- *
- * Modern, card-based display for a single ticket.
- * Shows status, severity, creator, and key metadata.
- */
-
 import Link from 'next/link';
 import { StatusBadge } from './StatusBadge';
 import { formatDistanceToNow } from 'date-fns';

@@ -1,10 +1,3 @@
-/**
- * Organization Members Page
- *
- * Lists active members and pending invitations.
- * Allows inviting new members and canceling pending invites.
- */
-
 import { getOrganizationMembers } from '@/lib/actions/organizations';
 import { listInvites } from '@/lib/actions/invites';
 import { InviteMemberForm } from '@/components/InviteMemberForm';

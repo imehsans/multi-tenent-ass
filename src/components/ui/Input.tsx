@@ -1,10 +1,3 @@
-/**
- * Input Component
- *
- * Reusable input with label, error states, and full accessibility.
- * Follows Rules.txt: Focused component with proper error handling.
- */
-
 import { InputHTMLAttributes, forwardRef, useId } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {

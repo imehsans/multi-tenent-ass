@@ -1,10 +1,3 @@
-/**
- * useRealtimeAttachments Hook
- *
- * Subscribes to attachment events for a specific ticket.
- * Listens for INSERT and DELETE events on the attachments table.
- */
-
 'use client';
 
 import { useEffect, useState } from 'react';

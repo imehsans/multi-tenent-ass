@@ -1,10 +1,3 @@
-/**
- * Signup Page
- *
- * User registration with email/password via Supabase Auth.
- * Creates user account and redirects to organizations page.
- */
-
 'use client';
 
 import { useState, FormEvent } from 'react';
@@ -68,13 +61,10 @@ export default function SignupPage() {
 
           await createOrganization(orgFormData);
 
-          // Redirect to orgs list (which will show the new org)
           router.push('/orgs');
           router.refresh();
         } catch (orgErr) {
           console.error('Failed to create organization:', orgErr);
-          // Standard fallback: they are created but org creation failed.
-          // Redirect to org creation page manually or list.
           router.push('/orgs/new');
         }
       } else if (data.user && !data.session) {

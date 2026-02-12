@@ -1,10 +1,3 @@
-/**
- * useTypingIndicator Hook
- *
- * Provides a way to broadcast "typing" events to other users on the same ticket.
- * Includes debouncing and automatic cleanup.
- */
-
 'use client';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
@@ -16,10 +9,8 @@ export function useTypingIndicator(ticketId: string) {
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // 1. Subscribe to ticket-specific typing channel
     const channel = supabase.channel(`ticket-${ticketId}-typing`);
 
-    // 2. Listen for 'broadcast' events
     channel
       .on(
         'broadcast',
@@ -55,12 +46,10 @@ export function useTypingIndicator(ticketId: string) {
 
       const channel = supabase.channel(`ticket-${ticketId}-typing`);
 
-      // 3. Clear existing timeout
       if (typingTimeoutRef.current) {
         clearTimeout(typingTimeoutRef.current);
       }
 
-      // 4. Broadcast "started typing" (debounce logic)
       if (value.length > 0) {
         await channel.send({
           type: 'broadcast',
@@ -71,7 +60,6 @@ export function useTypingIndicator(ticketId: string) {
           },
         });
 
-        // 5. Auto-broadcast "stopped typing" after 2s
         typingTimeoutRef.current = setTimeout(async () => {
           await channel.send({
             type: 'broadcast',
@@ -81,9 +69,8 @@ export function useTypingIndicator(ticketId: string) {
               is_typing: false,
             },
           });
-        }, 2000); // 2 second typing window
+        }, 2000); 
       } else {
-        // Immediate stop if input is cleared
         await channel.send({
           type: 'broadcast',
           event: 'typing',

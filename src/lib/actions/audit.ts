@@ -1,9 +1,3 @@
-/**
- * Audit Log Server Actions
- *
- * Implements immutable audit logging for organization events.
- */
-
 'use server';
 
 import { createClient } from '@/lib/supabase/server';

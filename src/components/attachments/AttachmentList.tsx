@@ -1,16 +1,7 @@
-/**
- * Attachment List Component
- *
- * Lists files attached to a ticket.
- * Allows downloading via signed URL.
- */
-
 'use client';
 
 import { getAttachmentUrl, deleteAttachment } from '@/lib/actions/attachments';
-import { Button } from '@/components/ui/Button';
 import { useRouter } from 'next/navigation';
-import { formatDistanceToNow } from 'date-fns';
 import { PaperClipIcon, TrashIcon } from '@heroicons/react/20/solid';
 
 import { useRealtimeAttachments } from '@/hooks/useRealtimeAttachments';

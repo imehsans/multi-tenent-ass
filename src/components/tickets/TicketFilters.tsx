@@ -1,10 +1,3 @@
-/**
- * Ticket Filters Component
- *
- * Filters tickets by status, severity, and text search.
- * Updates URL search params to preserve filter state on refresh.
- */
-
 'use client';
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
@@ -48,14 +41,8 @@ export function TicketFilters() {
       }
     }, 500);
     return () => clearTimeout(handler);
-  }, [search, router, pathname]); // Intentionally omitting searchParams to avoid circular dependency loop if not careful?
-  // Actually, if searchParams changes, we don't want to re-trigger this effect unless SEARCH changes.
-  // But inside, we need current searchParams.
-  // The searchParams in hook scope might be stale if we don't include it.
-  // BETTER APPROACH: Use a ref or just rely on the fact that if searchParams changes, component re-renders, effect re-runs if [search] is same? No.
-  // Ideally, use a function to update query.
+  }, [search, router, pathname]); 
 
-  // Let's use a helper for immediate updates (Status/Severity)
   const updateFilter = (name: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (value) {

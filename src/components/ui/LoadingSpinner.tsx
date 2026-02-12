@@ -1,9 +1,3 @@
-/**
- * Loading Spinner Component
- *
- * Animated spinner for loading states.
- */
-
 export function LoadingSpinner({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const sizeClasses = {
     sm: 'h-4 w-4',

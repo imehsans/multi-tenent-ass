@@ -1,9 +1,3 @@
-/**
- * Create Ticket Page
- *
- * Renders the TicketForm in creation mode.
- */
-
 import { TicketForm } from '@/components/tickets/TicketForm';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
@@ -24,7 +18,6 @@ export default async function NewTicketPage({ params }: PageProps) {
             <Button variant="ghost">Cancel</Button>
           </Link>
         </div>
-
         <TicketForm orgId={orgId} />
       </div>
     </div>

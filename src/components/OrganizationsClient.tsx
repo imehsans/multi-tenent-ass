@@ -1,9 +1,3 @@
-/**
- * Organizations List Page - Client Component
- *
- * Provides search and filter functionality for organizations.
- */
-
 'use client';
 
 import { useState, useMemo } from 'react';

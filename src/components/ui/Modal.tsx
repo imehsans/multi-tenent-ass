@@ -1,10 +1,3 @@
-/**
- * Modal Component
- *
- * Accessible modal dialog using Headless UI.
- * Accessible modal dialog using Headless UI.
- */
-
 'use client';
 
 import { Fragment, ReactNode } from 'react';

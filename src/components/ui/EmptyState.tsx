@@ -1,9 +1,3 @@
-/**
- * Empty State Component
- *
- * Display when lists/data are empty with optional action.
- */
-
 import { ReactNode } from 'react';
 import { Button } from './Button';
 

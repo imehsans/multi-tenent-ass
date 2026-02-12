@@ -1,9 +1,3 @@
-/**
- * Select Component
- *
- * Reusable select dropdown with label, error states, and accessibility.
- */
-
 import { SelectHTMLAttributes, forwardRef, useId } from 'react';
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {

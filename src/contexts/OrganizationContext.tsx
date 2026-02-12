@@ -1,12 +1,3 @@
-/**
- * Organization Context
- *
- * Manages organization state across the application.
- * CRITICAL: Safe org switching with full page refresh to prevent data leaks.
- *
- * See: docs/frontend.md - Step 3: Organization Context
- */
-
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';

@@ -1,10 +1,3 @@
-/**
- * Button Component
- *
- * Reusable button with variants, sizes, loading states, and full accessibility.
- * Follows Rules.txt: Small, focused component with proper TypeScript types.
- */
-
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

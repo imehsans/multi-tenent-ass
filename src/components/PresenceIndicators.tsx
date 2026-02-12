@@ -1,9 +1,3 @@
-/**
- * Presence Indicators
- *
- * Shows who is currently viewing a ticket.
- */
-
 'use client';
 
 import { usePresence } from '@/hooks/usePresence';

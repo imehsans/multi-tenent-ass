@@ -1,10 +1,3 @@
-/**
- * useRealtimeTickets Hook
- *
- * Subscribes to ticket updates within a specific organization.
- * Listens for INSERT, UPDATE, DELETE events on the tickets table.
- */
-
 'use client';
 
 import { useEffect, useState } from 'react';

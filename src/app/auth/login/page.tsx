@@ -1,10 +1,3 @@
-/**
- * Login Page
- *
- * Email/password login with Supabase Auth.
- * Integrates with auth middleware for protected routes.
- */
-
 'use client';
 
 import { useState, FormEvent } from 'react';

@@ -1,6 +1,4 @@
 import { getOrganization } from '@/lib/actions/organizations';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { OrgSettingsForm } from '@/components/OrgSettingsForm';
 
 interface PageProps {

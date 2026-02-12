@@ -1,10 +1,3 @@
-/**
- * Attachment Server Actions
- *
- * Manages file uploads to Supabase Storage and records metadata.
- * Enforces file size limits and RLS.
- */
-
 'use server';
 
 import { createClient } from '@/lib/supabase/server';

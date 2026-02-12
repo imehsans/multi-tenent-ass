@@ -1,9 +1,3 @@
-/**
- * High-Level 404 Not Found Page
- * - Displays when content at a given path is missing
- * - Provides a clear path back to the workspace
- */
-
 import Link from 'next/link';
 import { ArrowLeft, SearchX, Home } from 'lucide-react';
 

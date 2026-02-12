@@ -1,10 +1,3 @@
-/**
- * Ticket Server Actions
- *
- * Handles CRUD operations for tickets, including validation, audit logging,
- * and timeline updates.
- */
-
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
@@ -86,9 +79,6 @@ export async function createTicket(input: CreateTicketInput) {
     entity_id: ticket.id,
     new_data: { title: ticket.title, severity: ticket.severity },
   });
-
-  // Handle tags if provided (Assuming tags table implementation exists or skipping for MVP simplification)
-  // In a full implementation, you'd insert into ticket_tags here
 
   revalidatePath(`/orgs/${ticket.org_id}/tickets`);
   return ticket;
@@ -218,9 +208,6 @@ export async function deleteTicket(ticketId: string, hardDelete: boolean = false
     const { error } = await supabase.from('tickets').delete().eq('id', ticketId);
     if (error) throw error;
   } else {
-    // Soft delete not implemented in schema yet, requires `deleted_at` column.
-    // For now performing hard delete or skipping if column missing.
-    // Assuming hard delete for MVP based on available schema.
     const { error } = await supabase.from('tickets').delete().eq('id', ticketId);
     if (error) throw error;
   }
@@ -290,8 +277,6 @@ export async function listTickets(params: {
 
   const enrichedTickets = await Promise.all(
     tickets.map(async (ticket) => {
-      // Optimisation: Could batch these or cache, but for MVP straight fetch is acceptable for limit=10
-      // In production, use a proper profile table join
       let creatorName = 'Unknown';
       if (ticket.created_by) {
         const { data: userData } = await supabaseAdmin.auth.admin.getUserById(ticket.created_by);

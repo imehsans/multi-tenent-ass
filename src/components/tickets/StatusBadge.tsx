@@ -1,9 +1,3 @@
-/**
- * Status Badge Component
- *
- * Color-coded status indicator for tickets.
- */
-
 import { TicketStatus } from '@/lib/actions/tickets';
 
 const statusStyles: Record<TicketStatus, string> = {

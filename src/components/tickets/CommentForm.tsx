@@ -1,9 +1,3 @@
-/**
- * Comment Form Component
- *
- * Add comments to a ticket.
- */
-
 'use client';
 
 import { useState } from 'react';
@@ -26,9 +20,7 @@ export function CommentForm({ ticketId, onOptimisticAdd }: CommentFormProps) {
     if (!comment.trim()) return;
 
     const content = comment;
-    setComment(''); // Clear input immediately
-    // Don't set isSubmitting to true to block input, allow typing next one?
-    // Usually keep it accessible. But maybe prevent double submit.
+    setComment(''); 
     setIsSubmitting(true);
 
     // Optimistic Update
@@ -39,19 +31,17 @@ export function CommentForm({ ticketId, onOptimisticAdd }: CommentFormProps) {
         event_type: 'comment',
         content: content,
         created_at: new Date().toISOString(),
-        actor_id: 'me', // Fallback, will be updated or just placeholder
+        actor_id: 'me', 
         metadata: { optimistic: true },
       });
     }
 
     try {
       await addComment(ticketId, content);
-      router.refresh(); // Still refresh to conform other state if needed
+      router.refresh();
     } catch (error) {
       console.error('Failed to add comment:', error);
       alert('Failed to post comment. Please try again.');
-      // Ideally rollback optimistic update here, but for simple implementation we can just alert
-      // The optimistic item will persist until refresh if not handled, which is a known trade-off for simple code.
     } finally {
       setIsSubmitting(false);
     }

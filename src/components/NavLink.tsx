@@ -1,9 +1,3 @@
-/**
- * Navigation Link Component
- *
- * Client Component for sidebar links with active state highlighting.
- */
-
 'use client';
 
 import Link from 'next/link';

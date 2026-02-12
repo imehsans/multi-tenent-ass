@@ -1,10 +1,3 @@
-/**
- * Supabase Server Client
- *
- * Provides authenticated clients for use within Server Components and Server Actions.
- * Enforces RLS and proper cookie management for seamless sessions.
- */
-
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import type { Database } from '@/types/database.types';
@@ -36,11 +29,6 @@ export async function createClient() {
   );
 }
 
-/**
- * Service Role Client - USE WITH EXTREME CAUTION
- *
- * Bypasses all Row Level Security.
- */
 export function createServiceRoleClient() {
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

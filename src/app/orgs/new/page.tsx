@@ -1,9 +1,3 @@
-/**
- * Create Organization Page
- *
- * Form to create a new organization with auto-generated slug.
- */
-
 'use client';
 
 import { useState, FormEvent } from 'react';

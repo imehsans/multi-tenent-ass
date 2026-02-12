@@ -1,14 +1,7 @@
-/**
- * File Upload Component
- *
- * Uploads files to Supabase Storage via Server Action.
- */
-
 'use client';
 
 import { useState } from 'react';
 import { uploadAttachment } from '@/lib/actions/attachments';
-import { Button } from '@/components/ui/Button';
 import { useRouter } from 'next/navigation';
 
 interface FileUploadProps {

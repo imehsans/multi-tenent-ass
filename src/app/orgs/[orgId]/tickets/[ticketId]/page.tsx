@@ -1,10 +1,3 @@
-/**
- * Ticket Detail Page
- *
- * Modern, responsive design for ticket details.
- * Features a 2-column layout with main content and sidebar metadata.
- */
-
 import { getTicket } from '@/lib/actions/tickets';
 import { getTimeline } from '@/lib/actions/timeline';
 import { listAttachments } from '@/lib/actions/attachments';

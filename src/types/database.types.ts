@@ -1,10 +1,3 @@
-/**
- * Supabase Database Types
- * 
- * Generated manually as a placeholder.
- * Run `npm run db:types` to overwrite this with real types from your database.
- */
-
 export type Json =
    | string
    | number

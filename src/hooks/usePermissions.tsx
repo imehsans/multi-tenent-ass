@@ -1,13 +1,3 @@
-/**
- * usePermissions Hook
- * 
- * Client-side hook to check user permissions and show/hide UI elements.
- * Used for optimistic UI updates and preventing unnecessary API calls.
- * 
- * NOTE: This is NOT a security measure - security is enforced server-side
- * via RLS policies and server action permission checks.
- */
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -31,9 +21,6 @@ interface UsePermissionsReturn {
   canDeleteOrg: boolean;
 }
 
-/**
- * Permission matrix matching server-side permissions.ts
- */
 const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   owner: [
     'org.create',
@@ -77,9 +64,6 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   viewer: [],
 };
 
-/**
- * Hook to check user permissions in an organization
- */
 export function usePermissions(orgId: string): UsePermissionsReturn {
   const [role, setRole] = useState<Role | null>(null);
   const [loading, setLoading] = useState(true);
@@ -119,9 +103,6 @@ export function usePermissions(orgId: string): UsePermissionsReturn {
     fetchRole();
   }, [orgId]);
 
-  /**
-   * Check if user has a specific permission
-   */
   const can = (permission: Permission): boolean => {
     if (!role) return false;
     return ROLE_PERMISSIONS[role].includes(permission);
@@ -147,9 +128,6 @@ export function usePermissions(orgId: string): UsePermissionsReturn {
   };
 }
 
-/**
- * Higher-order component to conditionally render based on permission
- */
 export function WithPermission({
   orgId,
   permission,
@@ -169,9 +147,6 @@ export function WithPermission({
   return <>{children}</>;
 }
 
-/**
- * Higher-order component to conditionally render based on role
- */
 export function WithRole({
   orgId,
   roles,

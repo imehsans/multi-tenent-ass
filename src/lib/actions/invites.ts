@@ -1,13 +1,3 @@
-/**
- * Invites Server Actions
- *
- * Comprehensive invite flow with:
- * - Token-based invitations with expiry
- * - Email delivery via Supabase Auth
- * - Audit logging
- * - Accept/decline functionality
- */
-
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
@@ -24,11 +14,6 @@ interface CreateInviteInput {
   org_id: string;
 }
 
-/**
- * Creates an invitation for a user to join an organization
- * - If user exists: Adds them directly to the organization
- * - If user doesn't exist: Creates account with default password and adds to org
- */
 export async function createInvite(input: CreateInviteInput) {
   const user = await requireAuth();
   const supabase = await createClient();
@@ -165,9 +150,6 @@ export async function createInvite(input: CreateInviteInput) {
   }
 }
 
-/**
- * Gets invite details by token (public - needed before auth)
- */
 export async function getInviteByToken(token: string) {
   const supabase = await createClient();
 
@@ -208,9 +190,6 @@ export async function getInviteByToken(token: string) {
   return { invite };
 }
 
-/**
- * Accepts an invitation and adds user to organization
- */
 export async function acceptInvite(token: string) {
   const user = await requireAuth();
   const supabase = await createClient();
@@ -298,9 +277,6 @@ export async function acceptInvite(token: string) {
   };
 }
 
-/**
- * Lists pending invites for an organization
- */
 export async function listInvites(org_id: string) {
   const user = await requireAuth();
   const supabase = await createClient();
@@ -332,9 +308,6 @@ export async function listInvites(org_id: string) {
   return invites || [];
 }
 
-/**
- * Cancels (deletes) a pending invitation
- */
 export async function cancelInvite(invite_id: string) {
   const user = await requireAuth();
   const supabase = await createClient();

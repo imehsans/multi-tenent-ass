@@ -1,9 +1,3 @@
-/**
- * Audit Logs Page
- *
- * Lists audit logs for the organization.
- */
-
 import { getAuditLogs } from '@/lib/actions/audit';
 import { formatDistanceToNow } from 'date-fns';
 

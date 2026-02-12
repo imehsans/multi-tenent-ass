@@ -1,11 +1,3 @@
-/**
- * Invite Member Form Component
- *
- * Instantly adds users to organization.
- * - If user exists: Adds directly
- * - If user doesn't exist: Creates with password 12345678
- */
-
 'use client';
 
 import { useState } from 'react';

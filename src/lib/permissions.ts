@@ -1,13 +1,5 @@
-/**
- * Permissions System
- *
- * Provides authorization checks based on role-based access control (RBAC).
- * Enforces security rules for organization resources.
- */
-
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth';
-import type { Database } from '@/types/database.types';
 
 export type Role = 'owner' | 'admin' | 'member' | 'viewer';
 

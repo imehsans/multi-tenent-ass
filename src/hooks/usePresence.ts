@@ -1,10 +1,3 @@
-/**
- * usePresence Hook
- *
- * Tracks which users are currently viewing a specific ticket.
- * Uses Supabase Presence for live state syncing.
- */
-
 'use client';
 
 import { useEffect, useState } from 'react';

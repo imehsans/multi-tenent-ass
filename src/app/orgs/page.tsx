@@ -1,9 +1,3 @@
-/**
- * Organizations List Page
- *
- * Shows all organizations the user belongs to with search and filter.
- */
-
 import { getUserOrganizations } from '@/lib/actions/organizations';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
