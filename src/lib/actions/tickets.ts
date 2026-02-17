@@ -16,7 +16,7 @@ export interface CreateTicketInput {
   org_id: string;
   title: string;
   description?: string;
-  severity: number; // 1-5
+  severity: number; // 0-4
   assignee_id?: string;
   tags?: string[];
 }
@@ -61,6 +61,8 @@ export async function createTicket(input: CreateTicketInput) {
     .select()
     .single();
 
+  console.log("Log data ticket: ", ticket)
+
   if (error) throw error;
 
   // Add timeline event
@@ -77,7 +79,7 @@ export async function createTicket(input: CreateTicketInput) {
     action: 'ticket.created',
     entity_type: 'ticket',
     entity_id: ticket.id,
-    new_data: { title: ticket.title, severity: ticket.severity },
+    new_data: { title: ticket.title, severity: ticket.severity - 1 },
   });
 
   revalidatePath(`/orgs/${ticket.org_id}/tickets`);

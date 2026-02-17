@@ -1,8 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { requireAuth } from '@/lib/auth';
-import type { Database } from '@/types/database.types';
+import { requireAuth } from '@/lib/auth'; 
 
 export interface CreateAuditLogInput {
   org_id: string;
@@ -47,8 +46,7 @@ export async function getAuditLogs(params: {
   entity_type?: string;
   cursor?: string;
   limit?: number;
-}) {
-  const user = await requireAuth();
+}) { 
   const supabase = await createClient();
 
   const limit = params.limit || 50;

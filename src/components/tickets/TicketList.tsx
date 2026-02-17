@@ -28,11 +28,13 @@ export function TicketList({
   const [nextCursor, setNextCursor] = useState(initialNextCursor);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // Still use realtime updates, but be careful with pagination
-  // Realtime usually applies to the *viewport*, handling realtime + pagination is complex
-  // For this assignment, we'll keep it simple: realtime updates for loaded tickets
-  // New tickets might appear at top
-  const realtimeTickets = useRealtimeTickets(orgId, tickets);
+  // Use realtime tickets hook
+  const realtimeTickets = useRealtimeTickets(orgId, initialTickets);
+
+  // Sync realtime updates to local state
+  useEffect(() => {
+    setTickets(realtimeTickets);
+  }, [realtimeTickets]);
 
   // Sync state if initialTickets change (e.g. filtering via URL)
   useEffect(() => {
@@ -74,9 +76,8 @@ export function TicketList({
     threshold: 500,
   });
 
-  const displayedTickets = realtimeTickets.length > 0 ? realtimeTickets : tickets;
 
-  if (!displayedTickets || displayedTickets.length === 0) {
+  if (!tickets || tickets.length === 0) {
     return (
       <EmptyState
         title="No tickets found"
@@ -105,7 +106,7 @@ export function TicketList({
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {displayedTickets.map((ticket) => (
+        {tickets.map((ticket) => (
           <div key={ticket.id} className="h-full">
             <TicketCard ticket={ticket} />
           </div>
@@ -120,7 +121,7 @@ export function TicketList({
             <span>Loading more tickets...</span>
           </div>
         )}
-        {!hasNextPage && displayedTickets.length > 0 && (
+        {!hasNextPage && tickets.length > 0 && (
           <p className="text-sm text-gray-400">All tickets loaded</p>
         )}
       </div>

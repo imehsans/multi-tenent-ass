@@ -19,11 +19,11 @@ interface TicketCardProps {
 }
 
 const SEVERITY_CONFIG: Record<number, { bg: string; text: string; dot: string; label: string }> = {
-  1: { bg: 'bg-gray-100', text: 'text-gray-700', dot: 'bg-gray-500', label: 'Low' },
-  2: { bg: 'bg-blue-100', text: 'text-blue-700', dot: 'bg-blue-500', label: 'Medium' },
-  3: { bg: 'bg-orange-100', text: 'text-orange-700', dot: 'bg-orange-500', label: 'High' },
-  4: { bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-600', label: 'Critical' },
-  5: { bg: 'bg-red-600', text: 'text-white', dot: 'bg-white', label: 'Blocker' },
+  1: { bg: 'bg-gray-100', text: 'text-gray-700', dot: 'bg-gray-500', label: 'Trivial' },
+  2: { bg: 'bg-blue-100', text: 'text-blue-700', dot: 'bg-blue-500', label: 'Low' },
+  3: { bg: 'bg-orange-100', text: 'text-orange-700', dot: 'bg-orange-500', label: 'Medium' },
+  4: { bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-600', label: 'High' },
+  5: { bg: 'bg-red-600', text: 'text-white', dot: 'bg-white', label: 'Critical' },
 };
 
 export function TicketCard({ ticket }: TicketCardProps) {
